@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React's Context API</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+  <div>
+    <h1>Context</h1>
+    <p>
+      <b>Context</b> provides a way to pass data through the
+      component tree without having to pass props down manually
+      at every level.
+    </p>
+    <code>In a typical React application, data is passed top-down
+      (parent to child) via props, but this can be cumbersome for
+      certain types of props (e.g. locale preference, UI theme) that
+      are required by many components within an application. Context
+      provides a way to share values like these between components
+      without having to explicitly pass a prop through every level of
+      the tree.
+    </code>
+    <h2>Context API is available from React v16.3</h2>
+  </div>
+  <hr />
+  <div id="root"></div>
+  <!-- Normally We would pass props as follows:
+    <script type="text/babel">
+      function Parent ({ name }) {
+        return (
+          <div>
+            <h1>Parent</h1>
+            <Child name={name} />
+          </div>
+        );
+      }
+
+      function Child ({ name }) {
+        return (
+          <diV>
+            <h1>Child</h1>
+            <Grandchild name={name} />
+          </diV>
+        );
+      }
+
+      function Grandchild ({ name }) {
+        return (
+          <div>
+            <h1>Grandchild</h1>
+            <h3>Name: {name}</h3>
+          </div>
+        );
+      }
+
+      class App extends React.Component {
+        render() {
+          const name = 'Infantito';
+
+          return (
+            <Parent name={name} />
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+   -->
+   <script type="text/babel">
+    /*
+      In order to improve our abstraction over React and Redux,
+      what we're going to use React's Context API.
+    */
+
+    const Context = React.createContext();
+
+    function Parent () {
+      return (
+        <div>
+          <h1>Parent</h1>
+          <Child />
+        </div>
+      );
+    }
+
+    function Child () {
+      return (
+        <diV>
+          <h1>Child</h1>
+          <Grandchild  />
+        </diV>
+      );
+    }
+
+    function Grandchild ({ name }) {
+     return (
+        <Context.Consumer>
+          {
+            (name) => (
+              <div>
+                <h1>Grandchild</h1>
+                <h3>Name: {name}</h3>
+              </div>
+            )
+          }
+        </Context.Consumer>
+     );
+    }
+
+    class App extends React.Component {
+      render() {
+        const name = 'Infantito';
+
+        return (
+          <Context.Provider value={name}>
+            <Parent />
+          </Context.Provider>
+        );
+      }
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+   </script>
+</body>
+</html>

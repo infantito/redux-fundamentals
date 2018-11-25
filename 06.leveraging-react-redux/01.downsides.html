@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Downsides of React and Redux</title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+  <h1>Downsides of React and Redux</h1>
+  <p>
+    <b>Right Now:</b>
+    What we have done so far about react and redux is that
+    we passed our store in a "prop" to our main app component.
+
+    And then inside of our app component, we could do whatever
+    we want with the actual store. So here, we're calling
+    "store.subscribe" to listen for changes to the store.
+
+    We call "store.dispatch" to get the initial data for our
+    application, and the we call "store.getState" as well to
+    get specific slices of our store, and then we pass all of
+    that data, including the store itself, down to theses
+    children components.
+  </p>
+  <hr />
+  <p>
+    <b>Downside:</b>
+    The above works with our small app, but as our grows,
+    that's not really going to be super realistic, because
+    essentially, what will have to do is we'd have to plum
+    the store down to any component that needs it. And again,
+    if we have like 10 nested components, the we'd have to
+    pass a store down 10 layers, and it just really wouldn't
+    scale that well.
+
+    And another thing we're doing is we're updating our app
+    whenever anything changes. So if we had a really big app
+    because we're calling "store.subscribe", and specifically,
+    "forceUpdate" in our main app component whenever any of
+    our data changes, our entire app is re-rendering.
+
+    Ideally, what would happen is we would just render
+    components whose data has changed rather than
+    re-rendering every component ir our application.
+  </p>
+  <hr />
+  <p>
+    <b>Solution:</b>
+    So I want you to think about if were tasked building
+    a library to extract some of these rought parts,
+    how would we actually do it?
+
+    What we have to do is implement a way of getting the
+    state, updating the state, and listening for changes
+    on the state work as smoothly with the React as
+    possible.
+
+    We search how every component in our application can
+    easily get access to the store, whether that's to get
+    the state, update the state, or listen to the state
+    changes, nothing else we do will matter. The second thing
+    we'd want to look at is related to getting data from the
+    store to our component. And even more important, as I
+    mentioned earlier only re-rendering those components
+    when the data they need from the store changes.
+
+    Right now, the way we're solving this is by just calling
+    our getState method here at the root of our application
+    and passing that data down to any components that need
+    it. Just like with the store, that's going to scale very
+    well. If we can find and create a nice abstraction for
+    getting this store to any component that needs it, and
+    only re-rendering components when the exact data they
+    need change, we'll improve pretty much every aspect of
+    our current code base.
+    <br /><br />
+    So, we're going to think about how React and Redux
+    work together, and we're going to create a nice
+    abstraction over Redux in order to better and more
+    smoothly implement with our current React application.
+
+    <code>[React's Context API]</code>
+  </p>
+</body>
+</html>
